@@ -25,9 +25,43 @@ angular.module('yeomanTodoApp')
     };
 
     $scope.$watch('toggle', function(){
-      $scope.toggleText = $scope.toggle ? 'Toggle!' : 'some text';
-      $scope.outputForm = $scope.inputForm;
+      $scope.toggleTextEncrypt = $scope.toggle ? 'Toggle!' : 'some text';
+
+
+      switch ($scope.algorithm.selected) {
+        case 'one':
+          // Blah
+          var compressed = LZString.compress($scope.inputForm);
+          break;
+        case 'two':
+          // Blah
+          var compressor = new LZ77();
+          var compressed = compressor.compress($scope.inputForm);
+          break;
+      }
+      $scope.encryptForm = compressed;
+      debugger;
     });
+
+    $scope.$watch('decrypt', function(){
+      $scope.toggleTextDecrypt = 'Decrypt';
+
+
+      switch ($scope.algorithm.selected) {
+        case 'one':
+          // Blah
+          var compressed = LZString.decompress($scope.encryptForm);
+          break;
+        case 'two':
+          var compressor = new LZ77();
+          var compressed = compressor.decompress($scope.encryptForm);
+          break;
+      }
+      $scope.decryptForm = compressed;
+      debugger;
+    });
+
+    $scope.algorithms=['LZW', 'LZ77', 'three'];
   });
 
 
