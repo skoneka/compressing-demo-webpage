@@ -1,6 +1,7 @@
 <div class="container">
 
   <h2>My todos</h2>
+  <select ng-model="algorithm.selected" ng-options="algorithm for algorithm in algorithms"></select>
 
   <!-- Todos input -->
   <form role="form" ng-submit="addTodo()">
@@ -25,15 +26,14 @@
   </div>
 
 
-  <input type="text" ng-model="inputForm" placeholder="What needs to be done?" class="form-control">
+  <input type="text" ng-model="inputForm" placeholder="Paste here text" class="form-control">
   <button ng-click="toggle = !toggle">{{toggleTextEncrypt}}</button>
-
-  <select ng-model="algorithm.selected" ng-options="algorithm for algorithm in algorithms"></select>
+  
   <div class="box on" ng-show="toggle" ng-animate="'box'">On</div>
-  <input type="text" ng-model="encryptForm" placeholder="What needs to be done?" class="form-control">
+  <input type="text" ng-model="encryptForm" placeholder="Compressed text" class="form-control">
   <button ng-click="decrypt = !decrypt">{{toggleTextDecrypt}}</button>
   <div class="box on" ng-show="decrypt" ng-animate="'box'">On</div>
-  <input type="text" ng-model="decryptForm" placeholder="What needs to be done?" class="form-control">
+  <input type="text" ng-model="decryptForm" placeholder="Decompressed text" class="form-control">
 
 </div>
 
