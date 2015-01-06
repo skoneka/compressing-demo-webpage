@@ -1,38 +1,48 @@
 <div class="container">
 
-  <h2>My todos</h2>
-  <select ng-model="algorithm.selected" ng-options="algorithm for algorithm in algorithms"></select>
+  <h2>Compress/Decompress Demo</h2>
+
 
   <!-- Todos input -->
   <form role="form" ng-submit="addTodo()">
     <div class="row">
       <div class="input-group">
-        <input type="text" ng-model="todo" placeholder="What needs to be done?" class="form-control">
+        <input type="text" ng-model="todo" placeholder="What needs to be compressed?" class="form-control">
         <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Add">
+          <input type="submit" class="btn btn-primary" value="Compress">
         </span>
+        <select ng-model="algorithm.selected" ng-options="algorithm for algorithm in algorithms"></select>
       </div>
     </div>
 
-    <div ui-sortable ng-model="todos">
-      <p class="input-group" ng-repeat="todo in todos" style="padding:5px 10px; cursor: move;">
-        <input type="text" ng-model="todo" class="form-control">
-      </p>
-    </div>
   </form>
 
-  <div ui-sortable ng-model="todoBlockdiv">
-    <input type ="text" value="{{getValue()}}"/>
+  <hr>
+  <div ui-sortable ng-model="todos">
+    <p class="input-group" ng-repeat="todo in todos" style="padding:5px 10px; cursor: move;">
+      <input type="text" ng-model="todo.value" class="form-control">
+        <span class="input-group-btn">
+          <button class="btn btn-sm" ng-click="changeAlgorithm($index)" aria-label="TODO">{{todo.algorithm}}</button>
+          <button class="btn btn-info" ng-click="decompressTodo($index)" aria-label="Decompress">Decompress</button>
+
+          <button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>
+        </span>
+    </p>
   </div>
 
+  <!--<div ui-sortable ng-model="todoBlockdiv">-->
+    <!--<input type ="text" value="{{getValue()}}"/>-->
+  <!--</div>-->
 
-  <input type="text" ng-model="inputForm" placeholder="Paste here text" class="form-control">
-  <button ng-click="toggle = !toggle">{{toggleTextEncrypt}}</button>
-  
-  <div class="box on" ng-show="toggle" ng-animate="'box'">On</div>
-  <input type="text" ng-model="encryptForm" placeholder="Compressed text" class="form-control">
-  <button ng-click="decrypt = !decrypt">{{toggleTextDecrypt}}</button>
-  <div class="box on" ng-show="decrypt" ng-animate="'box'">On</div>
+
+  <!--<input type="text" ng-model="inputForm" placeholder="Paste here text" class="form-control">-->
+  <!--<button ng-click="toggle = !toggle">{{toggleTextEncrypt}}</button>-->
+
+  <!--<div class="box on" ng-show="toggle" ng-animate="'box'">On</div>-->
+  <!--<input type="text" ng-model="encryptForm" placeholder="Compressed text" class="form-control">-->
+  <!--<button ng-click="decrypt = !decrypt">{{toggleTextDecrypt}}</button>-->
+  <!--<div class="box on" ng-show="decrypt" ng-animate="'box'">On</div>-->
+  <hr>
   <input type="text" ng-model="decryptForm" placeholder="Decompressed text" class="form-control">
 
 </div>
