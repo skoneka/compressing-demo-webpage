@@ -66,7 +66,8 @@ angular.module('yeomanTodoApp')
         return $scope.todo;
     };
 
-/*    $scope.open = function() {
+    $scope.open = function() {
+      //debugger;
       $scope.showModal = true;
     };
 
@@ -76,7 +77,7 @@ angular.module('yeomanTodoApp')
 
     $scope.cancel = function() {
       $scope.showModal = false;
-    };*/
+    };
 
     $scope.compress = function(value, algorithm) {
 
