@@ -26,17 +26,29 @@
         <ul class="nav nav-pills pull-right">
           <li class="active"><a ng-href="#">Home</a></li>
           <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
         </ul>
-        <h3 class="text-muted">yeomanTodo</h3>
+        <h3 class="text-muted">Compress/Decompress demo</h3>
       </div>
 
       <div ng-view=""></div>
 
       <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <p>from Artur Skonecki</p>
       </div>
     </div>
+
+<!--    <div modal="showModal" close="cancel()">
+      <div class="modal-header">
+        <h4>Modal Dialog</h4>
+      </div>
+      <div class="modal-body">
+        <p>Example paragraph with some text.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">Okay</button>
+        <button class="btn" ng-click="cancel()">Cancel</button>
+      </div>
+    </div>-->
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -70,7 +82,6 @@
     <script src="bower_components/jquery-ui/jquery-ui.js"></script>
     <script src="bower_components/angular-ui-sortable/sortable.js"></script>
     <script src="bower_components/lz-string-bower/lz-string.js"></script>
-    <script src="bower_components/LZMA-JS/src/lzma_worker.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -79,6 +90,7 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/algorithms/lz77.js"></script>
+        <script src="bower_components/LZMA-JS/src/lzma_worker.js"></script>
         <!-- endbuild -->
 </body>
 </html>
