@@ -8,41 +8,14 @@
  * Controller of the yeomanTodoApp
  */
 angular.module('yeomanTodoApp')
-  .controller('MainCtrl', function ($scope, dialogs) {
+  .controller('MainCtrl', function ($scope, dialogs, FileUploader) {
     $scope.todos = [
       {value: 'օ〶惶@✰ӈ', algorithm: "LZW"}
     ];
     $scope.addTodo = function () {
       console.log('addTodo');
-
-      //switch ('LZW') {
-      //  //LZMA.compress(string, mode, on_finish(result) {}, on_progress(percent) {});
-      //  //
-      //  //  LZMA.decompress(byte_array, on_finish(result) {}, on_progress(percent) {});
-      //  case 'LZW':
-      //    // Blah
-      //    var compressed = LZString.compress($scope.inputForm);
-      //    $scope.encryptForm = compressed;
-      //    break;
-      //
-      //  case 'LZ77':
-      //    var compressor = new LZ77();
-      //    var compressed = compressor.compress($scope.inputForm);
-      //    $scope.encryptForm = compressed;
-      //    break;
-      //
-      //  case 'LZMA':
-      //    LZMA.compress($scope.inputForm, 1, function on_compress_complete(result) {
-      //      $scope.$apply(function () {
-      //        console.log('compresses: ' + result);
-      //        $scope.encryptForm = result;
-      //      });
-      //
-      //    }, function on_compress_progress_update(percent) {
-      //      document.title = "Compressing: " + (percent * 100) + "%";
-      //    });
-      //    break;
-      //}
+      $scope.uploader = new FileUploader();
+      debugger;
 
       //$scope.todos.push($scope.todo);
       $scope.compress($scope.todo, $scope.algorithm.selected);

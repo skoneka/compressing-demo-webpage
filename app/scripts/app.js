@@ -18,7 +18,8 @@ angular
     'ngTouch',
     'ui.sortable',
     'ui.bootstrap',
-    'dialogs.main'
+    'dialogs.main',
+    'angularFileUpload'
   ])
   .config(function ($routeProvider) {
     $routeProvider
