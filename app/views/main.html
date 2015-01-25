@@ -43,21 +43,10 @@
   <!--<button ng-click="decrypt = !decrypt">{{toggleTextDecrypt}}</button>-->
   <!--<div class="box on" ng-show="decrypt" ng-animate="'box'">On</div>-->
   <hr>
-  <input type="text" ng-model="decryptForm" placeholder="Decompressed text" class="form-control">
 
-  <button class="btn" ng-click="open()">Open Modal</button>
-
-  <div modal="showModal" close="cancel()">
-    <div class="modal-header">
-      <h4>Modal Dialog</h4>
-    </div>
-    <div class="modal-body">
-      <p>Example paragraph with some text.</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-success" ng-click="ok()">Okay</button>
-      <button class="btn" ng-click="cancel()">Cancel</button>
-    </div>
+  <div class="row">
+  <textarea class="col-md-6" type="text" ng-style="formCheckStyle" ng-model="orginalValueForm" placeholder="Orginal text" class="form-control"/>
+  <textarea class="col-md-6" type="text" ng-style="formCheckStyle" ng-model="decryptForm" placeholder="Decompressed text" class="form-control"/>
   </div>
 
 

@@ -29,7 +29,7 @@ angular.module('yeomanTodoApp')
 
         // Error Dialog
         case 'error':
-          dlg = dialogs.error('This is my error message');
+          dlg = dialogs.error('This is my error message','message');
           break;
 
         // Wait / Progress Dialog

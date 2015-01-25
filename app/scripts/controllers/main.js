@@ -8,7 +8,7 @@
  * Controller of the yeomanTodoApp
  */
 angular.module('yeomanTodoApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, dialogs) {
     $scope.todos = [
       {value: 'օ〶惶@✰ӈ', algorithm: "LZW"}
     ];
@@ -62,22 +62,6 @@ angular.module('yeomanTodoApp')
       //$scope.todos.splice(index, 1);
     };
 
-    $scope.getValue = function(){
-        return $scope.todo;
-    };
-
-    $scope.open = function() {
-      //debugger;
-      $scope.showModal = true;
-    };
-
-    $scope.ok = function() {
-      $scope.showModal = false;
-    };
-
-    $scope.cancel = function() {
-      $scope.showModal = false;
-    };
 
     $scope.compress = function(value, algorithm) {
 
@@ -88,20 +72,20 @@ angular.module('yeomanTodoApp')
           case 'LZW':
             // Blah
             var compressed = LZString.compress(value);
-            $scope.todos.push({value: compressed, algorithm: 'LZW'});
+            $scope.todos.push({value: compressed, algorithm: 'LZW', orginal_value: value});
             break;
 
           case 'LZ77':
             var compressor = new LZ77();
             var compressed = compressor.compress(value);
-            $scope.todos.push({value: compressed, algorithm: 'LZ77'});
+            $scope.todos.push({value: compressed, algorithm: 'LZ77', orginal_value: value});
             break;
 
           case 'LZMA':
             LZMA.compress(value, 1, function on_compress_complete(compressed) {
               $scope.$apply(function () {
                 console.log('compresses: ' + compressed);
-                $scope.todos.push({value: compressed, algorithm: 'LZMA'});
+                $scope.todos.push({value: compressed, algorithm: 'LZMA', orginal_value: value});
               });
 
             }, function on_compress_progress_update(percent) {
@@ -113,9 +97,9 @@ angular.module('yeomanTodoApp')
     };
 
     $scope.decompress = function(index) {
+      $scope.orginalValueForm = $scope.todos[index].orginal_value;
       switch ($scope.todos[index].algorithm) {
         case 'LZW':
-          // Blah
           var compressed = LZString.decompress($scope.todos[index].value);
           $scope.decryptForm = compressed;
           break;
@@ -136,6 +120,12 @@ angular.module('yeomanTodoApp')
             document.title = "Decompressing: " + (percent * 100) + "%";
           });
           break;
+      }
+      if ($scope.orginalValueForm == $scope.decryptForm )
+        $scope.formCheckStyle = { "background" : "green", "color" : "black" }
+      else {
+        var dlg = dialogs.error('Decompressed value does not match orginal value.');
+        $scope.formCheckStyle = {"background": "red", "color": "black"}
       }
     };
 
