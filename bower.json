@@ -18,7 +18,8 @@
     "LZMA-JS": "~1.2.3",
     "angular-bootstrap": "~0.11.2",
     "dialogs": "~5.2.6",
-    "angular-base64": "~2.0.3"
+    "angular-base64": "~2.0.3",
+    "FileSaver": "*"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

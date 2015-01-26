@@ -13,7 +13,7 @@ function download(filename, value) {
   pom.click();
 }
 
-function download2(filename, value) {
+function download2a(filename, value) {
   var a = window.document.createElement('a');
   a.href = window.URL.createObjectURL(new Blob([value]));
   a.download = filename;
@@ -24,6 +24,16 @@ function download2(filename, value) {
 
 // Remove anchor from body
   document.body.removeChild(a)
+}
+
+function download2(filename, value) {
+
+  var bytes = new Uint8Array(value.length);
+  for (var i=0; i<value.length; i++)
+    bytes[i] = value.charCodeAt(i);
+
+  var blob = new Blob([], {type: "application/octet-stream"});
+  saveAs(blob, filename);
 }
 
 
@@ -200,7 +210,6 @@ angular.module('yeomanTodoApp')
           case 'nocompression':
             $scope.pushItem(uncompressed, uncompressed, 'nocompression', type, name);
         }
-
     };
 
     $scope.decompress2 = function(decompressed, index, bDownload) {
