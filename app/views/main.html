@@ -2,7 +2,7 @@
 
   <h2>Compress/Decompress Demo</h2>
 
-  Upload image: <input type="checkbox" ng-model="checked"><br/>
+  Upload File: <input type="checkbox" ng-model="checked" ng-init="checked=true"><br/>
   <!-- Todos input -->
   <div class="check-element animate-show" ng-hide="checked">
     <form role="form" ng-submit="addTodo()">
@@ -23,7 +23,7 @@
       <input type="file" onchange="angular.element(this).scope().previewFile()"><br>
 
       <select ng-model="algorithm.selected" ng-options="algorithm for algorithm in algorithms"></select>
-      <input type="submit" class="btn btn-primary" value="Compress Image">
+      <input type="submit" class="btn btn-primary" value="Compress File">
       <img id="img-src" ng-show="checked" src="" height="200" alt="Image preview...">
     </form>
   </div>
@@ -35,28 +35,19 @@
       <input type="text" ng-model="todo.value" class="form-control">
         <span class="input-group-btn">
           <button class="btn btn-sm" ng-click="changeAlgorithm($index)" aria-label="TODO">{{todo.algorithm}}</button>
+          <button class="btn btn-sm" ng-click="" aria-label="TODO">Size {{todo.size}}</button>
           <button class="btn btn-sm" ng-click="" aria-label="TODO">CR {{todo.cr}}</button>
-          <button class="btn btn-sm" ng-click="" aria-label="TODO">Entropy-pre {{todo.entropy_pre}}</button>
-          <button class="btn btn-sm" ng-click="" aria-label="TODO">Entropy-post {{todo.entropy_post}}</button>
+          <button class="btn btn-sm" ng-click="" aria-label="TODO">Entropy {{todo.entropy}}</button>
+          <button class="btn btn-sm" ng-click="" aria-label="TODO">Type {{todo.type}}</button>
           <button class="btn btn-info" ng-click="decompressTodo($index)" aria-label="Decompress">Decompress</button>
+          <button class="btn btn-info" ng-click="downloadFile($index)" aria-label="Download">Download</button>
 
           <button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>
         </span>
     </p>
   </div>
 
-  <!--<div ui-sortable ng-model="todoBlockdiv">-->
-    <!--<input type ="text" value="{{getValue()}}"/>-->
-  <!--</div>-->
 
-
-  <!--<input type="text" ng-model="inputForm" placeholder="Paste here text" class="form-control">-->
-  <!--<button ng-click="toggle = !toggle">{{toggleTextEncrypt}}</button>-->
-
-  <!--<div class="box on" ng-show="toggle" ng-animate="'box'">On</div>-->
-  <!--<input type="text" ng-model="encryptForm" placeholder="Compressed text" class="form-control">-->
-  <!--<button ng-click="decrypt = !decrypt">{{toggleTextDecrypt}}</button>-->
-  <!--<div class="box on" ng-show="decrypt" ng-animate="'box'">On</div>-->
   <hr>
 
   <div class="row">
@@ -72,28 +63,3 @@
 
 
 </div>
-
-
-<!--<div class="jumbotron">-->
-  <!--<h1>'Allo, 'Allo!</h1>-->
-  <!--<p class="lead">-->
-    <!--<img src="images/yeoman.png" alt="I'm Yeoman"><br>-->
-    <!--Always a pleasure scaffolding your apps.-->
-  <!--</p>-->
-  <!--<p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>-->
-<!--</div>-->
-
-<!--<div class="row marketing">-->
-  <!--<h4>HTML5 Boilerplate</h4>-->
-  <!--<p>-->
-    <!--HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.-->
-  <!--</p>-->
-
-  <!--<h4>Angular</h4>-->
-  <!--<p>-->
-    <!--AngularJS is a toolset for building the framework most suited to your application development.-->
-  <!--</p>-->
-
-  <!--<h4>Karma</h4>-->
-  <!--<p>Spectacular Test Runner for JavaScript.</p>-->
-<!--</div>-->
