@@ -166,7 +166,7 @@ angular.module('yeomanTodoApp')
 
 
     $scope.pushItem = function(compressed, uncompressed, algorithm, type, name) {
-      $scope.todos.push({value: compressed, algorithm: 'LZW', orginal_value: uncompressed, type: type,
+      $scope.todos.push({value: compressed, algorithm: algorithm, orginal_value: uncompressed, type: type,
         cr: (uncompressed.length/compressed.length).toFixed(3), entropy : shannon.entropy(uncompressed).toFixed(3)+'/'+shannon.entropy(compressed).toFixed(3),
         size : uncompressed.length.toString()+'/'+compressed.length.toString(),
         name: name});
@@ -197,6 +197,8 @@ angular.module('yeomanTodoApp')
               //document.title = "Compressing: " + (percent * 100) + "%";
             });
             break;
+          case 'nocompression':
+            $scope.pushItem(uncompressed, uncompressed, 'nocompression', type, name);
         }
 
     };
@@ -246,10 +248,13 @@ angular.module('yeomanTodoApp')
             //document.title = "Decompressing: " + (percent * 100) + "%";
           });
           break;
+        case 'nocompression':
+          $scope.decompress2($scope.todos[index].value, index, bDownload);
+          break;
       }
 
     };
-    $scope.algorithms=['LZW', 'LZ77', 'LZMA'];
+    $scope.algorithms=['LZW', 'LZ77', 'LZMA', 'nocompression'];
   });
 
 
