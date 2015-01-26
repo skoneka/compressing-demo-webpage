@@ -2,20 +2,32 @@
 
   <h2>Compress/Decompress Demo</h2>
 
-
+  Upload image: <input type="checkbox" ng-model="checked"><br/>
   <!-- Todos input -->
-  <form role="form" ng-submit="addTodo()">
-    <div class="row">
-      <div class="input-group">
-        <input type="text" ng-model="todo" placeholder="What needs to be compressed?" class="form-control">
-        <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Compress">
-        </span>
-        <select ng-model="algorithm.selected" ng-options="algorithm for algorithm in algorithms"></select>
+  <div class="check-element animate-show" ng-hide="checked">
+    <form role="form" ng-submit="addTodo()">
+      <div class="row">
+        <div class="input-group">
+          <input type="text" ng-model="todo" placeholder="What needs to be compressed?" class="form-control">
+          <span class="input-group-btn">
+            <input type="submit" class="btn btn-primary" value="Compress Text">
+          </span>
+          <select ng-model="algorithm.selected" ng-options="algorithm for algorithm in algorithms"></select>
+        </div>
       </div>
-    </div>
+    </form>
+  </div>
 
-  </form>
+  <div class="check-element animate-show" ng-show="checked">
+    <form role="form" ng-submit="addFile()">
+      <input type="file" onchange="angular.element(this).scope().previewFile()"><br>
+
+      <select ng-model="algorithm.selected" ng-options="algorithm for algorithm in algorithms"></select>
+      <input type="submit" class="btn btn-primary" value="Compress Image">
+      <img id="img-src" ng-show="checked" src="" height="200" alt="Image preview...">
+    </form>
+  </div>
+
 
   <hr>
   <div ui-sortable ng-model="todos">
@@ -47,19 +59,12 @@
   <div class="row">
   <textarea class="col-md-6" type="text" ng-style="formCheckStyle" ng-model="orginalValueForm" placeholder="Orginal text" class="form-control"/>
   <textarea class="col-md-6" type="text" ng-style="formCheckStyle" ng-model="decryptForm" placeholder="Decompressed text" class="form-control"/>
+  <div class="check-element animate-show" ng-show="checked">
+    <img id="img-dest" ng-show="checked" src="" height="200" alt="Image preview...">
+  </div>
   </div>
 
-  <div ng-app="app">
-    <div ng-controller="AppController">
-      <input type="file" nv-file-select uploader="uploader"/><br/>
-      <ul>
-        <li ng-repeat="item in uploader.queue">
-          Name: <span ng-bind="item.file.name"></span><br/>
-          <button ng-click="item.upload()">upload</button>
-        </li>
-      </ul>
-    </div>
-  </div>
+
 
 
 

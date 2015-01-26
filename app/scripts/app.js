@@ -19,7 +19,7 @@ angular
     'ui.sortable',
     'ui.bootstrap',
     'dialogs.main',
-    'angularFileUpload'
+    'base64'
   ])
   .config(function ($routeProvider) {
     $routeProvider

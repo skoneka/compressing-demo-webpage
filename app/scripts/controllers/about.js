@@ -31,7 +31,6 @@ angular.module('yeomanTodoApp')
         case 'error':
           dlg = dialogs.error('This is my error message','message');
           break;
-
         // Wait / Progress Dialog
         case 'wait':
           dlg = dialogs.wait(msgs[i++],progress);
