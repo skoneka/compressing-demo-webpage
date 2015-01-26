@@ -1,5 +1,43 @@
 'use strict';
 
+// entropy.js MIT License © 2014 James Abney http://github.com/jabney
+
+// Calculate the Shannon entropy of a string in bits per symbol.
+(function(shannon) {
+  'use strict';
+
+  // Create a dictionary of character frequencies and iterate over it.
+  function process(s, evaluator) {
+    var h = Object.create(null), k;
+    s.split('').forEach(function(c) {
+      h[c] && h[c]++ || (h[c] = 1); });
+    if (evaluator) for (k in h) evaluator(k, h[k]);
+    return h;
+  };
+
+  // Measure the entropy of a string in bits per symbol.
+  shannon.entropy = function(s) {
+    var sum = 0,len = s.length;
+    process(s, function(k, f) {
+      var p = f/len;
+      sum -= p * Math.log(p) / Math.log(2);
+    });
+    return sum;
+  };
+
+  // Measure the entropy of a string in total bits.
+  shannon.bits = function(s) {
+    return shannon.entropy(s) * s.length;
+  };
+
+  // Log the entropy of a string to the console.
+  shannon.log = function(s) {
+    console.log('Entropy of "' + s + '" in bits per symbol:', shannon.entropy(s));
+  };
+})(window.shannon = window.shannon || Object.create(null));
+
+
+
 function ab2str(buf) {
   return String.fromCharCode.apply(null, new Uint16Array(buf));
 }
@@ -38,7 +76,7 @@ function b64_to_utf8(str) {
 angular.module('yeomanTodoApp')
   .controller('MainCtrl', function ($scope, dialogs, $base64) {
     $scope.todos = [
-      {value: 'օ〶惶@✰ӈ', algorithm: "LZW",  type: 'text'},
+      {value: 'օ〶惶@✰ӈ', algorithm: "LZW",  type: 'text', cr:'CR'},
       {value: 'ኀ怶ภ☁恑ȋ₊쪁ꠏ䀷㑐ᶈ간쨭⚫栒䁓尋䀡Ƅܶ工㠇畂┺ᆜI敠ᵟḢƘ嚵犀웜ʨٰୡ%耯䷪蠄怉끁ᆨ㌀͓䠀盕ꠄ㆗쀃倂햗ሢ', orginal_value: 'ኀ怶ภ☁恑ȋ₊쪁ꠏ䀷㑐ᶈ간쨭⚫栒䁓尋䀡Ƅܶ工㠇畂┺ᆜI敠ᵟḢƘ嚵犀웜ʨٰୡ%耯䷪蠄怉끁ᆨ㌀͓䠀盕ꠄ㆗쀃倂햗ሢ', algorithm: "LZW", type: 'image'}
     ];
     $scope.showpreview = true;
@@ -120,6 +158,8 @@ angular.module('yeomanTodoApp')
 
     $scope.compress = function(value, algorithm, type) {
 
+        shannon.log(value);
+
         switch (algorithm) {
           //LZMA.compress(string, mode, on_finish(result) {}, on_progress(percent) {});
           //
@@ -127,20 +167,21 @@ angular.module('yeomanTodoApp')
           case 'LZW':
             // Blah
             var compressed = LZString.compress(value);
-            $scope.todos.push({value: compressed, algorithm: 'LZW', orginal_value: value, type: type});
+            $scope.todos.push({value: compressed, algorithm: 'LZW', orginal_value: value, type: type, cr: (value.length/compressed.length).toFixed(3), entropy_pre : shannon.entropy(value).toFixed(3), entropy_post : shannon.entropy(compressed).toFixed(3)});
+            shannon.log(compressed);
             break;
 
           case 'LZ77':
             var compressor = new LZ77();
             var compressed = compressor.compress(value);
-            $scope.todos.push({value: compressed, algorithm: 'LZ77', orginal_value: value, type: type});
+            $scope.todos.push({value: compressed, algorithm: 'LZ77', orginal_value: value, type: type, cr: value.length/compressed.length});
             break;
 
           case 'LZMA':
             LZMA.compress(value, 1, function on_compress_complete(compressed) {
               $scope.$apply(function () {
                 console.log('compresses: ' + compressed);
-                $scope.todos.push({value: compressed, algorithm: 'LZMA', orginal_value: value, type: type});
+                $scope.todos.push({value: compressed, algorithm: 'LZMA', orginal_value: value, type: type, cr: value.length/compressed.length});
               });
 
             }, function on_compress_progress_update(percent) {

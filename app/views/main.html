@@ -34,7 +34,10 @@
     <p class="input-group" ng-repeat="todo in todos" style="padding:5px 10px; cursor: move;">
       <input type="text" ng-model="todo.value" class="form-control">
         <span class="input-group-btn">
-          <button class="btn btn-sm" ng-click="changeAlgorithm($index)" aria-label="TODO">{{todo.algorithm}} Entropy Compression Ratio</button>
+          <button class="btn btn-sm" ng-click="changeAlgorithm($index)" aria-label="TODO">{{todo.algorithm}}</button>
+          <button class="btn btn-sm" ng-click="" aria-label="TODO">CR {{todo.cr}}</button>
+          <button class="btn btn-sm" ng-click="" aria-label="TODO">Entropy-pre {{todo.entropy_pre}}</button>
+          <button class="btn btn-sm" ng-click="" aria-label="TODO">Entropy-post {{todo.entropy_post}}</button>
           <button class="btn btn-info" ng-click="decompressTodo($index)" aria-label="Decompress">Decompress</button>
 
           <button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>
