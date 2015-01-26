@@ -7,7 +7,7 @@ function getBinary() {
 
 function download(filename, value) {
   var pom = document.createElement('a');
-  pom.setAttribute('href', 'data:applicatinon/octet-stream,' + value);
+  pom.setAttribute('href', 'data:applicatinon/octet-stream;' + value);
   //pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
   pom.setAttribute('download', filename);
   pom.click();
@@ -164,10 +164,6 @@ angular.module('yeomanTodoApp')
       $scope.todos.splice(index, 1);
     };
 
-    $scope.decompressTodo = function (index) {
-      $scope.decompress(index);
-    };
-
 
     $scope.pushItem = function(compressed, uncompressed, algorithm, type, name) {
       $scope.todos.push({value: compressed, algorithm: 'LZW', orginal_value: uncompressed, type: type,
@@ -205,65 +201,49 @@ angular.module('yeomanTodoApp')
 
     };
 
-    $scope.decompress = function(index) {
+    $scope.decompress2 = function(decompressed, index, bDownload) {
+      $scope.decryptForm = decompressed;
+      if ($scope.todos[index].type.lastIndexOf('image',0) === 0) {
+        var preview = document.querySelector('#img-dest');
+        preview.src = 'data:'+$scope.todos[index].type+';base64,' + btoa(decompressed);
+      }
+
+      if ($scope.orginalValueForm == $scope.decryptForm )
+        $scope.formCheckStyle = { "background" : "green", "color" : "black" }
+      else {
+        //var dlg = dialogs.error('Decompressed value does not match original value.');
+        $scope.formCheckStyle = {"background": "red", "color": "black"}
+      }
+
+      if (bDownload) {
+        download2($scope.todos[index].name, decompressed);
+      }
+
+    }
+
+    $scope.decompress = function(index,bDownload) {
       if ($scope.todos[index].type.lastIndexOf('image',0) === 0)
         $scope.orginalValueForm = $scope.todos[index].orginal_value;
       else
         $scope.orginalValueForm = $scope.todos[index].orginal_value;
       switch ($scope.todos[index].algorithm) {
         case 'LZW':
-          var decompressed = LZString.decompress($scope.todos[index].value);
-          $scope.decryptForm = decompressed;
-          if ($scope.todos[index].type.lastIndexOf('image',0) === 0) {
-            var preview = document.querySelector('#img-dest');
-            preview.src = 'data:'+$scope.todos[index].type+';base64,' + btoa(decompressed);
-          }
+          $scope.decompress2(LZString.decompress($scope.todos[index].value), index, bDownload);
 
-          if ($scope.orginalValueForm == $scope.decryptForm )
-            $scope.formCheckStyle = { "background" : "green", "color" : "black" }
-          else {
-            //var dlg = dialogs.error('Decompressed value does not match original value.');
-            $scope.formCheckStyle = {"background": "red", "color": "black"}
-          }
           break;
         case 'LZ77':
           var compressor = new LZ77();
-          var decompressed = compressor.decompress($scope.todos[index].value);
-          $scope.decryptForm = decompressed;
-
-          if ($scope.todos[index].type.lastIndexOf('image',0) === 0) {
-            var preview = document.querySelector('#img-dest');
-            preview.src = 'data:' + $scope.todos[index].type + ';base64,' + btoa(decompressed);
-          }
-
-          if ($scope.orginalValueForm == $scope.decryptForm )
-            $scope.formCheckStyle = { "background" : "green", "color" : "black" }
-          else {
-            //var dlg = dialogs.error('Decompressed value does not match original value.');
-            $scope.formCheckStyle = {"background": "red", "color": "black"}
-          }
+          $scope.decompress2(compressor.decompress($scope.todos[index].value), index, bDownload);
           break;
 
         case 'LZMA':
           LZMA.decompress($scope.todos[index].value, function on_decompress_complete(result) {
             $scope.$apply(function () {
-              $scope.decryptForm = result;
-
-              if ($scope.todos[index].type.lastIndexOf('image',0) === 0) {
-                var preview = document.querySelector('#img-dest');
-                preview.src = 'data:' + $scope.todos[index].type + ';base64,' + btoa(decompressed)
-              }
-
-              if ($scope.orginalValueForm == $scope.decryptForm )
-                $scope.formCheckStyle = { "background" : "green", "color" : "black" }
-              else {
-                //var dlg = dialogs.error('Decompressed value does not match original value.');
-                $scope.formCheckStyle = {"background": "red", "color": "black"}
-              }
+              $scope.decompress2(result, index, bDownload);
             });
           }, function on_decompress_progress_update(percent) {
             /// Decompressing progress code goes here.
-            document.title = "Decompressing: " + (percent * 100) + "%";
+            //document.title = "Decompressing: " + (percent * 100) + "%";
           });
           break;
       }

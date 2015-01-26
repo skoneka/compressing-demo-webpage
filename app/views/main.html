@@ -39,7 +39,8 @@
           <button class="btn btn-sm" ng-click="" aria-label="TODO">CR {{todo.cr}}</button>
           <button class="btn btn-sm" ng-click="" aria-label="TODO">Entropy {{todo.entropy}}</button>
           <button class="btn btn-sm" ng-click="" aria-label="TODO">Type {{todo.type}}</button>
-          <button class="btn btn-info" ng-click="decompressTodo($index)" aria-label="Decompress">Decompress</button>
+          <button class="btn btn-info" ng-click="decompress($index,false)" aria-label="Decompress">Decompress</button>
+          <button class="btn btn-info" ng-click="decompress($index,true)" aria-label="Decompress&Download">Decompress&Download</button>
           <button class="btn btn-info" ng-click="downloadFile($index)" aria-label="Download">Download</button>
 
           <button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>
