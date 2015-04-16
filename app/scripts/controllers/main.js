@@ -177,7 +177,7 @@ angular.module('yeomanTodoApp')
 
     $scope.pushItem = function(compressed, uncompressed, algorithm, type, name) {
       $scope.todos.push({value: compressed, algorithm: algorithm, orginal_value: uncompressed, type: type,
-        cr: (uncompressed.length/compressed.length).toFixed(3), entropy : shannon.entropy(uncompressed).toFixed(3)+'/'+shannon.entropy(compressed).toFixed(3),
+        cr: (uncompressed.length/compressed.length).toFixed(3),
         size : uncompressed.length.toString()+'/'+compressed.length.toString(),
         name: name});
     };
